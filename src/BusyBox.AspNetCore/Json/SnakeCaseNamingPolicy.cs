@@ -20,15 +20,15 @@ namespace BusyBox.AspNetCore.Json
 			if (countCharUpper == 0)
 				return name;
 
-			var sizeBuffer = charset.Length + countCharUpper;
-			var indexWrite = indexStart;
+			int sizeBuffer = charset.Length + countCharUpper;
+			int indexWrite = indexStart;
 
 			Span<char> buffer = sizeBuffer < 255 ? stackalloc char[sizeBuffer] : new char[sizeBuffer];
 
 			if (char.IsUpper(charset[0]))
 				buffer[0] = char.ToLower(charset[0]);
 
-			for (var indexRead = indexStart; indexRead < charset.Length; indexRead++)
+			for (int indexRead = indexStart; indexRead < charset.Length; indexRead++)
 			{
 				if (char.IsUpper(charset[indexRead]))
 				{
@@ -48,7 +48,7 @@ namespace BusyBox.AspNetCore.Json
 
 		private static int GetCountCharUpper(ReadOnlySpan<char> charset)
 		{
-			var count = 1;
+			int count = 1;
 			for (int index = 1; index < charset.Length; index++)
 				if (char.IsUpper(charset[index]))
 					count++;
