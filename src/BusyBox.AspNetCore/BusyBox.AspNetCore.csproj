@@ -10,5 +10,7 @@
         <Description>Provides various extensions of AspNetCore </Description>
         <Copyright>Copyright © Ivan Igoshkin 2021</Copyright>
     </PropertyGroup>
-
+    <ItemGroup>
+        <FrameworkReference Include="Microsoft.AspNetCore.App" PrivateAssets="all" />
+    </ItemGroup>
 </Project>
