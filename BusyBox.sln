@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusyBox.AspNetCore", "src\BusyBox.AspNetCore\BusyBox.AspNetCore.csproj", "{4C287559-B53D-4A69-8E45-1EDF071C035B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusyBox.AspNetCore.Tests", "src\BusyBox.AspNetCore.Tests\BusyBox.AspNetCore.Tests.csproj", "{18B3B30D-0820-401A-A5EE-E401AF09436C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "src\BusyBox.AspNetCore.Benchmarks", "src\BusyBox.AspNetCore.Benchmarks\BusyBox.AspNetCore.Benchmarks.csproj", "{97B7D527-9E4B-4415-A240-AC1833AF86B0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution", "Solution", "{D7893118-ADB8-403C-A537-4FA38BD875B6}"
+ProjectSection(SolutionItems) = preProject
+	.editorconfig = .editorconfig
+	.gitignore = .gitignore
+EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4C287559-B53D-4A69-8E45-1EDF071C035B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C287559-B53D-4A69-8E45-1EDF071C035B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C287559-B53D-4A69-8E45-1EDF071C035B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C287559-B53D-4A69-8E45-1EDF071C035B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18B3B30D-0820-401A-A5EE-E401AF09436C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18B3B30D-0820-401A-A5EE-E401AF09436C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18B3B30D-0820-401A-A5EE-E401AF09436C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18B3B30D-0820-401A-A5EE-E401AF09436C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97B7D527-9E4B-4415-A240-AC1833AF86B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97B7D527-9E4B-4415-A240-AC1833AF86B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97B7D527-9E4B-4415-A240-AC1833AF86B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97B7D527-9E4B-4415-A240-AC1833AF86B0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
