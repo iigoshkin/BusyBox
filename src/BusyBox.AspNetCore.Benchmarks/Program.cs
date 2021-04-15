@@ -1,4 +1,5 @@
 ﻿using System;
+using BenchmarkDotNet.Running;
 
 namespace BusyBox.AspNetCore.Benchmarks
 {
@@ -6,7 +7,7 @@ namespace BusyBox.AspNetCore.Benchmarks
 	{
 		static void Main(string[] args)
 		{
-			Console.WriteLine("Hello World!");
+            var summary = BenchmarkRunner.Run<NamingPolicy>();
 		}
 	}
 }

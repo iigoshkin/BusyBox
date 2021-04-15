@@ -1,59 +1,70 @@
 ﻿using System;
+using System.Buffers;
 using System.Text.Json;
 
 namespace BusyBox.AspNetCore.Json
 {
-	public class SnakeCaseNamingPolicy : JsonNamingPolicy
-	{
-		public static SnakeCaseNamingPolicy Instance { get; } = new SnakeCaseNamingPolicy();
+    /// <summary>
+    /// Implements the SnakeCase naming policy for properties JSON
+    /// <example>user_name</example>
+    /// </summary>
+    public class SnakeCaseNamingPolicy : JsonNamingPolicy
+    {
+        /// <summary>
+        /// Get instance SnakeCaseNamingPolicy
+        /// </summary>
+        public static SnakeCaseNamingPolicy Instance => new SnakeCaseNamingPolicy();
 
-		public override string ConvertName(string name)
-		{
-			const int indexStart = 1;
-			const char splitChar = '_';
+        public override string ConvertName(string name)
+        {
+            const int indexStart = 1;
+            const char splitChar = '_';
 
-			if (string.IsNullOrEmpty(name))
-				throw new ArgumentNullException(nameof(name));
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentNullException(nameof(name));
 
-			ReadOnlySpan<char> charset = name.ToCharArray();
-			int countCharUpper = GetCountCharUpper(charset);
-			if (countCharUpper == 0)
-				return name;
+            ReadOnlySpan<char> charset = name.ToCharArray();
+            int countCharUpper = GetCountCharUpper(charset);
 
-			int sizeBuffer = charset.Length + countCharUpper;
-			int indexWrite = indexStart;
+            int indexWrite = indexStart;
 
-			Span<char> buffer = sizeBuffer < 255 ? stackalloc char[sizeBuffer] : new char[sizeBuffer];
+            var arrayPool = ArrayPool<char>.Shared;
+            char[] buffer = arrayPool.Rent(charset.Length + countCharUpper);
 
-			if (char.IsUpper(charset[0]))
-				buffer[0] = char.ToLower(charset[0]);
+            if (char.IsUpper(charset[0]))
+                buffer[0] = char.ToLower(charset[0]);
 
-			for (int indexRead = indexStart; indexRead < charset.Length; indexRead++)
-			{
-				if (char.IsUpper(charset[indexRead]))
-				{
-					buffer[indexWrite] = splitChar;
-					buffer[++indexWrite] = char.ToLower(charset[indexRead]);
-					indexWrite++;
-				}
-				else
-				{
-					buffer[indexWrite] = charset[indexRead];
-					indexWrite++;
-				}
-			}
+            for (int indexRead = indexStart; indexRead < charset.Length; indexRead++)
+            {
+                if (char.IsUpper(charset[indexRead]))
+                {
+                    buffer[indexWrite] = splitChar;
+                    buffer[++indexWrite] = char.ToLower(charset[indexRead]);
+                    indexWrite++;
+                }
+                else
+                {
+                    buffer[indexWrite] = charset[indexRead];
+                    indexWrite++;
+                }
+            }
 
-			return new string(buffer[..indexWrite]);
-		}
+            var str = new string(new ReadOnlySpan<char>(buffer, 0, indexWrite));
+            arrayPool.Return(buffer, true);
 
-		private static int GetCountCharUpper(ReadOnlySpan<char> charset)
-		{
-			int count = 1;
-			for (int index = 1; index < charset.Length; index++)
-				if (char.IsUpper(charset[index]))
-					count++;
+            return str;
+        }
 
-			return count;
-		}
-	}
+        private static int GetCountCharUpper(ReadOnlySpan<char> span)
+        {
+            int count = 0;
+            for (int index = 0; index < span.Length; index++)
+            {
+                if (char.IsUpper(span[index]))
+                    count++;
+            }
+
+            return count;
+        }
+    }
 }
