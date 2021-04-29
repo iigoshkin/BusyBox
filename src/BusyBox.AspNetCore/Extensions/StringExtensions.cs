@@ -1,0 +1,28 @@
+﻿using System;
+
+namespace BusyBox.AspNetCore.Extensions
+{
+    public static class StringExtensions
+    {
+        public static ReadOnlySpan<byte> EncodePemContent(this string pemContents)
+        {
+            string header = pemContents.IndexOf("PRIVATE", StringComparison.OrdinalIgnoreCase) > -1
+                ? "RSA PRIVATE"
+                : "PUBLIC";
+
+            string rsaBeginHeaderKey = $"-----BEGIN {header} KEY-----";
+            string rsaFooterHeaderKey = $"-----END {header} KEY-----";
+
+            int endIdx = pemContents.IndexOf(
+                rsaFooterHeaderKey,
+                rsaBeginHeaderKey.Length,
+                StringComparison.Ordinal);
+
+            string base64 = pemContents.Substring(
+                rsaBeginHeaderKey.Length,
+                endIdx - rsaBeginHeaderKey.Length);
+
+            return Convert.FromBase64String(base64);
+        }
+    }
+}

@@ -8,7 +8,9 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
+        <PackageReference Include="Moq" Version="4.16.1" />
         <PackageReference Include="xunit" Version="2.4.1" />
+        <PackageReference Include="Xunit.Extensions.Ordering" Version="1.4.5" />
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
@@ -21,6 +23,15 @@
 
     <ItemGroup>
       <ProjectReference Include="..\BusyBox.AspNetCore\BusyBox.AspNetCore.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="private.pem">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="public.pem">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>
