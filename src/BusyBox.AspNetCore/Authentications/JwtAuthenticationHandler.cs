@@ -14,9 +14,8 @@ using Microsoft.Net.Http.Headers;
 
 namespace BusyBox.AspNetCore.Authentications
 {
-    public class JwtAuthenticationHandler : AuthenticationHandler<JwtAuthenticationOptions>
+    internal class JwtAuthenticationHandler : AuthenticationHandler<JwtAuthenticationOptions>
     {
-        public const string SchemaName = "Bearer";
         private const string Unauthorized = "Unauthorized";
 
         private readonly IJwtSecurityService _securityService;
@@ -43,10 +42,10 @@ namespace BusyBox.AspNetCore.Authentications
             if (string.IsNullOrEmpty(authorizationHeader))
                 return Task.FromResult(AuthenticateResult.NoResult());
 
-            if (!authorizationHeader.StartsWith(SchemaName, StringComparison.OrdinalIgnoreCase))
+            if (!authorizationHeader.StartsWith(Scheme.Name, StringComparison.OrdinalIgnoreCase))
                 return Task.FromResult(AuthenticateResult.Fail(Unauthorized));
 
-            string token = authorizationHeader.Substring(SchemaName.Length).Trim();
+            string token = authorizationHeader.Substring(Scheme.Name.Length).Trim();
 
             try
             {
