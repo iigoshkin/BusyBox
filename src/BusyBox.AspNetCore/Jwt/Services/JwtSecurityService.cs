@@ -47,7 +47,7 @@ namespace BusyBox.AspNetCore.Jwt.Services
                 audience: options.Audience,
                 issuer: options.Issuer,
                 claims: claims,
-                expires: now.Add(TimeSpan.Parse(options.Expires)),
+                expires: now.Add(TimeSpan.Parse(options.Expires!)),
                 signingCredentials: signingCredentials
             );
 
