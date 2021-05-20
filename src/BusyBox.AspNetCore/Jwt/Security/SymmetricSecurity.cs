@@ -7,22 +7,28 @@ namespace BusyBox.AspNetCore.Jwt.Security
 {
     public class SymmetricSecurity : ISigning
     {
-        private readonly string _secretKey;
+        private readonly IOptionsMonitor<JwtSecurityOptions> _options;
 
-        public SymmetricSecurity(IOptions<SigningSetting> options)
+        public SymmetricSecurity(IOptionsMonitor<JwtSecurityOptions> options)
         {
-            SigningSetting setting = options.Value;
-            if (string.IsNullOrEmpty(setting.SecretKey))
-                throw new SigningException("SecretKey cannot be empty");
-
-            _secretKey = setting.SecretKey;
+            _options = options;
         }
 
-        public SecurityKey GetSecurityKey() => new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secretKey));
+        public SecurityKey GetSecurityKey()
+        {
+            JwtSecurityOptions setting = _options.CurrentValue;
+            if (string.IsNullOrEmpty(setting.SecretKey))
+                throw new SigningException("SecretKey cannot be empty");
+            return new SymmetricSecurityKey(Encoding.UTF8.GetBytes(setting.SecretKey));
+        }
 
         public SigningCredentials CreateSigning()
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secretKey));
+            JwtSecurityOptions setting = _options.CurrentValue;
+            if (string.IsNullOrEmpty(setting.SecretKey))
+                throw new SigningException("SecretKey cannot be empty");
+
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(setting.SecretKey));
 
             return new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
         }

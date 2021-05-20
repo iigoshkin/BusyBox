@@ -1,5 +1,4 @@
-﻿using System;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using BusyBox.AspNetCore.Jwt;
 using BusyBox.AspNetCore.Jwt.Security;
 using BusyBox.AspNetCore.Jwt.Services;
@@ -12,15 +11,13 @@ namespace BusyBox.AspNetCore.Tests
 {
     public class JwtServiceTests
     {
-        private readonly JwtService _service = new JwtService(NullLogger<JwtService>.Instance);
-
         [Fact]
         public void CreateToken()
         {
-            string token = _service.CreateToken("au", "iss",
-                TimeSpan.Parse("00:30:00"),
+            IJwtSecurityService service = CreateInstance();
+            string token = service.CreateToken(
                 new[] { new Claim(ClaimTypes.Email, "t_test@mail.com") },
-                new AsymmetricSigning(GetJwtOptions())
+                new AsymmetricSigning(GetJwtSecurityOptions())
             );
             Assert.NotEmpty(token);
         }
@@ -28,24 +25,25 @@ namespace BusyBox.AspNetCore.Tests
         [Fact]
         public void ValidateBaseToken()
         {
-            var signing = new AsymmetricSigning(GetJwtOptions());
-            string token = _service.CreateToken("au", "iss",
-                TimeSpan.Parse("00:30:00"),
+            var signing = new AsymmetricSigning(GetJwtSecurityOptions());
+            IJwtSecurityService service = CreateInstance();
+
+            string token = service.CreateToken(
                 new[] { new Claim(nameof(ClaimTypes.Email), "t_test@mail.com") },
                 signing
             );
 
-            JwtTokenResult result = _service.ValidateToken("au", "iss", token, signing.GetSecurityKey());
+            JwtTokenResult result = service.ValidateToken(token, signing.GetSecurityKey());
             Assert.True(result.Valid);
         }
 
         [Fact]
         public void SymmetricCreateToken()
         {
-            string token = _service.CreateToken("au", "iss",
-                TimeSpan.Parse("00:30:00"),
+            IJwtSecurityService service = CreateInstance();
+            string token = service.CreateToken(
                 new[] { new Claim(ClaimTypes.Email, "t_test@mail.com") },
-                new SymmetricSecurity(GetJwtOptions())
+                new SymmetricSecurity(GetJwtSecurityOptions())
             );
             Assert.NotEmpty(token);
         }
@@ -53,32 +51,40 @@ namespace BusyBox.AspNetCore.Tests
         [Fact]
         public void SymmetricValidateToken()
         {
-            var signing = new SymmetricSecurity(GetJwtOptions());
-            string token = _service.CreateToken("au", "iss",
-                TimeSpan.Parse("00:30:00"),
+            IJwtSecurityService service = CreateInstance();
+            var signing = new SymmetricSecurity(GetJwtSecurityOptions());
+            string token = service.CreateToken(
                 new[] { new Claim(nameof(ClaimTypes.Email), "t_test@mail.com") },
                 signing
             );
 
-            JwtTokenResult result = _service.ValidateToken("au", "iss", token, signing.GetSecurityKey());
+            JwtTokenResult result = service.ValidateToken(token, signing.GetSecurityKey());
             Assert.True(result.Valid);
         }
 
-        private static IOptions<SigningSetting> GetJwtOptions()
+        private static IJwtSecurityService CreateInstance() =>
+            new JwtSecurityService(
+                NullLogger<JwtSecurityService>.Instance,
+                GetJwtSecurityOptions()
+            );
+
+        private static IOptionsMonitor<JwtSecurityOptions> GetJwtSecurityOptions()
         {
-            var options = new Mock<IOptions<SigningSetting>>();
+            var options = new Mock<IOptionsMonitor<JwtSecurityOptions>>();
             options
-                .Setup(mock => mock.Value)
-                .Returns(new SigningSetting
+                .SetupGet(mock => mock.CurrentValue)
+                .Returns(new JwtSecurityOptions
                     {
+                        Audience = "au",
+                        Issuer = "iss",
+                        Expires = "00:30:00",
                         PathPrivateKey = "./private.pem",
                         PathPublicKey = "./public.pem",
-                        SecretKey = "secretsecretsecret"
+                        SecretKey = "secretsecretsecret",
                     }
                 );
+
             return options.Object;
         }
-
-
     }
 }

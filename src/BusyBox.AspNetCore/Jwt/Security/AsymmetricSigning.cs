@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Security;
 using System.Security.Cryptography;
 using BusyBox.AspNetCore.Extensions;
 using Microsoft.Extensions.Options;
@@ -11,32 +10,27 @@ namespace BusyBox.AspNetCore.Jwt.Security
     public class AsymmetricSigning : ISigning, IDisposable
     {
         private readonly RSA _signing;
-        private readonly string _pathPublicKey;
-        private readonly string _pathPrivateKey;
+        private readonly IOptionsMonitor<JwtSecurityOptions> _options;
 
         private bool _disposed;
 
-        public AsymmetricSigning(IOptions<SigningSetting> options)
+        public AsymmetricSigning(IOptionsMonitor<JwtSecurityOptions> options)
         {
-            SigningSetting setting = options.Value;
-            if (string.IsNullOrEmpty(setting.PathPrivateKey))
-                throw new SecurityException("Path the private key cannot be empty");
-
-            if (string.IsNullOrEmpty(setting.PathPublicKey))
-                throw new SecurityException("Path the public key cannot be empty");
-
+            _options = options;
             _signing = RSA.Create();
-            _pathPrivateKey = setting.PathPrivateKey;
-            _pathPublicKey = setting.PathPublicKey;
         }
 
         public SecurityKey GetSecurityKey()
         {
             CheckObjectDispose();
-            if (!File.Exists(_pathPublicKey))
-                throw new FileNotFoundException(_pathPublicKey);
+            JwtSecurityOptions options = _options.CurrentValue;
+            if (options == null)
+                throw new ArgumentException("Missing config section for Jwt");
 
-            string pemContents = File.ReadAllText(_pathPublicKey);
+            if (!File.Exists(options.PathPublicKey))
+                throw new FileNotFoundException(options.PathPublicKey);
+
+            string pemContents = File.ReadAllText(options.PathPublicKey);
             ReadOnlySpan<byte> der = pemContents.EncodePemContent();
             _signing.ImportSubjectPublicKeyInfo(der, out _);
 
@@ -46,10 +40,14 @@ namespace BusyBox.AspNetCore.Jwt.Security
         public SigningCredentials CreateSigning()
         {
             CheckObjectDispose();
-            if (!File.Exists(_pathPrivateKey))
-                throw new FileNotFoundException(_pathPrivateKey);
+            JwtSecurityOptions options = _options.CurrentValue;
+            if (options == null)
+                throw new ArgumentException("Missing config section for Jwt");
 
-            string pemContents = File.ReadAllText(_pathPrivateKey);
+            if (!File.Exists(options.PathPrivateKey))
+                throw new FileNotFoundException(options.PathPrivateKey);
+
+            string pemContents = File.ReadAllText(options.PathPrivateKey);
 
             ReadOnlySpan<byte> der = pemContents.EncodePemContent();
             _signing.ImportRSAPrivateKey(der, out _);

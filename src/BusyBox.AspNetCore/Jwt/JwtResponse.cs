@@ -1,19 +1,28 @@
 namespace BusyBox.AspNetCore.Jwt
 {
-	public class JwtResponse
+	/// <summary>
+	/// Token creation result
+	/// </summary>
+    public class JwtResponse
 	{
-		public string Token { get; }
+        /// <summary>
+        /// Token
+        /// </summary>
+        public string Token { get; }
 
+        /// <summary>
+        /// Token expiration time
+        /// </summary>
 		public long ExpiresAt { get; }
 
-		public JwtResponse()
-		{
-		}
+		public JwtResponse(string token)
+        {
+            Token = token;
+        }
 
-		public JwtResponse(string token, long expiresAt)
+		public JwtResponse(string token, long expiresAt) : this(token)
 		{
-			Token = token;
-			ExpiresAt = expiresAt;
+            ExpiresAt = expiresAt;
 		}
 	}
 }
