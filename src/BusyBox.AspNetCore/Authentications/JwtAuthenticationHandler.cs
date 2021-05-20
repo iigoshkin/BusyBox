@@ -16,7 +16,7 @@ namespace BusyBox.AspNetCore.Authentications
 {
     public class JwtAuthenticationHandler : AuthenticationHandler<JwtAuthenticationOptions>
     {
-        private const string SchemaName = "Bearer";
+        public const string SchemaName = "Bearer";
         private const string Unauthorized = "Unauthorized";
 
         private readonly IJwtSecurityService _securityService;
