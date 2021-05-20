@@ -2,7 +2,7 @@
 
 namespace BusyBox.AspNetCore.Authentications
 {
-    public class JwtAuthenticationOptions : AuthenticationSchemeOptions
+    internal class JwtAuthenticationOptions : AuthenticationSchemeOptions
     {
 
     }
