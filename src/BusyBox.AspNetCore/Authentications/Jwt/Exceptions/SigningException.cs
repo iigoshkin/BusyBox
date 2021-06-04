@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BusyBox.AspNetCore.Jwt.Exceptions
+namespace BusyBox.AspNetCore.Authentications.Jwt.Exceptions
 {
     public class SigningException : Exception
     {

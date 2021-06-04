@@ -1,6 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 
-namespace BusyBox.AspNetCore.Jwt.Security
+namespace BusyBox.AspNetCore.Authentications.Jwt.Security
 {
     public interface ISigning
     {

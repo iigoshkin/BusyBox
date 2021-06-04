@@ -1,6 +1,6 @@
 using System.Security.Claims;
 
-namespace BusyBox.AspNetCore.Jwt
+namespace BusyBox.AspNetCore.Authentications.Jwt
 {
     public class JwtTokenResult
     {

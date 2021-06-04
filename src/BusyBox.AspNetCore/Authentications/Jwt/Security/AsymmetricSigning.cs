@@ -5,7 +5,7 @@ using BusyBox.AspNetCore.Extensions;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-namespace BusyBox.AspNetCore.Jwt.Security
+namespace BusyBox.AspNetCore.Authentications.Jwt.Security
 {
     public class AsymmetricSigning : ISigning, IDisposable
     {

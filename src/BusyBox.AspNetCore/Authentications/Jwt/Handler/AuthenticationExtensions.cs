@@ -1,12 +1,11 @@
 ﻿using System;
-using BusyBox.AspNetCore.Jwt;
-using BusyBox.AspNetCore.Jwt.Security;
-using BusyBox.AspNetCore.Jwt.Services;
+using BusyBox.AspNetCore.Authentications.Jwt.Security;
+using BusyBox.AspNetCore.Authentications.Jwt.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace BusyBox.AspNetCore.Authentications
+namespace BusyBox.AspNetCore.Authentications.Jwt.Handler
 {
     public static class AuthenticationExtensions
     {

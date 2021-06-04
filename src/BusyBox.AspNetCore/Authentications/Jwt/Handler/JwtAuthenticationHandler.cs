@@ -4,15 +4,14 @@ using System.Security.Claims;
 using System.Security.Principal;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using BusyBox.AspNetCore.Jwt;
-using BusyBox.AspNetCore.Jwt.Security;
-using BusyBox.AspNetCore.Jwt.Services;
+using BusyBox.AspNetCore.Authentications.Jwt.Security;
+using BusyBox.AspNetCore.Authentications.Jwt.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 
-namespace BusyBox.AspNetCore.Authentications
+namespace BusyBox.AspNetCore.Authentications.Jwt.Handler
 {
     internal class JwtAuthenticationHandler : AuthenticationHandler<JwtAuthenticationOptions>
     {

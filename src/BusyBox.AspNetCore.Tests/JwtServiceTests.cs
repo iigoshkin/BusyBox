@@ -1,7 +1,7 @@
 ﻿using System.Security.Claims;
-using BusyBox.AspNetCore.Jwt;
-using BusyBox.AspNetCore.Jwt.Security;
-using BusyBox.AspNetCore.Jwt.Services;
+using BusyBox.AspNetCore.Authentications.Jwt;
+using BusyBox.AspNetCore.Authentications.Jwt.Security;
+using BusyBox.AspNetCore.Authentications.Jwt.Services;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 using Moq;

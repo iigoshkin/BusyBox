@@ -1,9 +1,9 @@
 ﻿using System.Text;
-using BusyBox.AspNetCore.Jwt.Exceptions;
+using BusyBox.AspNetCore.Authentications.Jwt.Exceptions;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-namespace BusyBox.AspNetCore.Jwt.Security
+namespace BusyBox.AspNetCore.Authentications.Jwt.Security
 {
     public class SymmetricSecurity : ISigning
     {

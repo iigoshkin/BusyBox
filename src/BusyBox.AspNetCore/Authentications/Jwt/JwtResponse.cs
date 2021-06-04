@@ -1,4 +1,4 @@
-namespace BusyBox.AspNetCore.Jwt
+namespace BusyBox.AspNetCore.Authentications.Jwt
 {
 	/// <summary>
 	/// Token creation result

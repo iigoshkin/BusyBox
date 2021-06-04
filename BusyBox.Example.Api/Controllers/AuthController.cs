@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
-using BusyBox.AspNetCore.Jwt.Security;
-using BusyBox.AspNetCore.Jwt.Services;
+using BusyBox.AspNetCore.Authentications.Jwt.Security;
+using BusyBox.AspNetCore.Authentications.Jwt.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

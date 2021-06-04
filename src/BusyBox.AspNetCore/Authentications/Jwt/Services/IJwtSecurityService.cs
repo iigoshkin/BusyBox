@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
-using BusyBox.AspNetCore.Jwt.Security;
+using BusyBox.AspNetCore.Authentications.Jwt.Security;
 using Microsoft.IdentityModel.Tokens;
 
-namespace BusyBox.AspNetCore.Jwt.Services
+namespace BusyBox.AspNetCore.Authentications.Jwt.Services
 {
     public interface IJwtSecurityService
     {
