@@ -14,7 +14,7 @@ EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusyBox.Example.Api", "expamples\BusyBox.Example.Api\BusyBox.Example.Api.csproj", "{0C03FDE2-8406-4AF0-A911-AFFDC67639BA}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "expamples", "expamples", "{D1CA99D1-0FCA-4D1C-B6A1-F7EC25D87190}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Expample", "Expample", "{D1CA99D1-0FCA-4D1C-B6A1-F7EC25D87190}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
