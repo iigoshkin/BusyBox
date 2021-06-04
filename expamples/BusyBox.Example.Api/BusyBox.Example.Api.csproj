@@ -9,7 +9,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\src\BusyBox.AspNetCore\BusyBox.AspNetCore.csproj" />
+      <ProjectReference Include="..\..\src\BusyBox.AspNetCore\BusyBox.AspNetCore.csproj" />
     </ItemGroup>
 
 </Project>
