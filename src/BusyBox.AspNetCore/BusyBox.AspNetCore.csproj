@@ -6,6 +6,7 @@
         <Nullable>enable</Nullable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>BusyBox.AspNetCore</Title>
+        <VersionPrefix>1.0.0</VersionPrefix>
         <Authors>ivan igoshkin</Authors>
         <Description>Provides various extensions of AspNetCore </Description>
         <Copyright>Copyright © Ivan Igoshkin 2021</Copyright>
