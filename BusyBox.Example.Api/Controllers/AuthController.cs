@@ -1,5 +1,4 @@
 ﻿using System.Security.Claims;
-using BusyBox.AspNetCore.Authentications.Jwt.Security;
 using BusyBox.AspNetCore.Authentications.Jwt.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,16 +9,14 @@ namespace BusyBox.Example.Api.Controllers
     public class AuthController : Controller
     {
         private readonly IJwtSecurityService _service;
-        private readonly ISigning _signing;
 
-        public AuthController(IJwtSecurityService service, ISigning signing)
+        public AuthController(IJwtSecurityService service)
         {
             _service = service;
-            _signing = signing;
         }
 
         [HttpGet("token")]
-        public string GetToken() => _service.CreateToken(new[] { new Claim(ClaimTypes.Email, "u_primer@primer.net") }, _signing);
+        public string GetToken() => _service.CreateToken(new[] { new Claim(ClaimTypes.Email, "u_primer@primer.net") });
 
         [HttpGet("message")]
         [Authorize]

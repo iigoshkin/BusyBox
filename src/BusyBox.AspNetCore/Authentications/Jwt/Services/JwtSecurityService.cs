@@ -13,17 +13,21 @@ namespace BusyBox.AspNetCore.Authentications.Jwt.Services
     {
         private readonly ILogger<JwtSecurityService> _logger;
         private readonly IOptionsMonitor<JwtSecurityOptions> _optionsMonitor;
+        private readonly ISigning _signing;
 
         /// <summary>
         /// Initializer for a new object
         /// </summary>
         /// <param name="logger"></param>
         /// <param name="optionsMonitor"></param>
+        /// <param name="signing"></param>
         public JwtSecurityService(ILogger<JwtSecurityService> logger,
-            IOptionsMonitor<JwtSecurityOptions> optionsMonitor)
+            IOptionsMonitor<JwtSecurityOptions> optionsMonitor,
+            ISigning signing)
         {
             _logger = logger;
             _optionsMonitor = optionsMonitor;
+            _signing = signing;
         }
 
         /// <summary>
@@ -33,11 +37,9 @@ namespace BusyBox.AspNetCore.Authentications.Jwt.Services
         /// <param name="signing">The <see cref="ISigning"/> that will be used to sign</param>
         /// <returns>Return JWT or JWE token</returns>
         /// <exception cref="ArgumentNullException">The (audience, issuer, expires) argument is null </exception>
-        public string CreateToken(
-            IEnumerable<Claim> claims,
-            ISigning signing)
+        public string CreateToken(IEnumerable<Claim> claims)
         {
-            SigningCredentials signingCredentials = signing.CreateSigning();
+            SigningCredentials signingCredentials = _signing.CreateSigning();
             JwtSecurityOptions options = _optionsMonitor.CurrentValue;
             if (options == null)
                 throw new ArgumentException("Missing config section for Jwt");
