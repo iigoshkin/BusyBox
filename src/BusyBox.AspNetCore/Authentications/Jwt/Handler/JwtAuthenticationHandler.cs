@@ -55,10 +55,14 @@ namespace BusyBox.AspNetCore.Authentications.Jwt.Handler
                 if (result.Principal == null)
                     throw new SecurityException("Principal is null");
 
-                var claims = ((ClaimsIdentity)result.Principal.Identity).Claims;
+                var currentIdentity = result.Principal.Identity as ClaimsIdentity;
+                if (currentIdentity == null)
+                    throw new Exception("Is not type ClaimsIdentity");
+
+                var claims = currentIdentity.Claims;
 
                 ClaimsIdentity identity = new (claims, Scheme.Name);
-                GenericPrincipal principal = new (identity, null);
+                GenericPrincipal principal = new (currentIdentity, null);
                 AuthenticationTicket ticket = new (principal, Scheme.Name);
 
                 return Task.FromResult(AuthenticateResult.Success(ticket));

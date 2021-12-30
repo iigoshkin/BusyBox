@@ -27,6 +27,9 @@ namespace BusyBox.AspNetCore.Authentications.Jwt.Security
             if (options == null)
                 throw new ArgumentException("Missing config section for Jwt");
 
+            if (string.IsNullOrEmpty(options.PathPublicKey))
+                throw new ArgumentException("Path publick key is null or empty");
+
             if (!File.Exists(options.PathPublicKey))
                 throw new FileNotFoundException(options.PathPublicKey);
 
@@ -43,6 +46,9 @@ namespace BusyBox.AspNetCore.Authentications.Jwt.Security
             JwtSecurityOptions options = _options.CurrentValue;
             if (options == null)
                 throw new ArgumentException("Missing config section for Jwt");
+
+            if (string.IsNullOrEmpty(options.PathPrivateKey))
+                throw new ArgumentException("Path private key is empty");
 
             if (!File.Exists(options.PathPrivateKey))
                 throw new FileNotFoundException(options.PathPrivateKey);
