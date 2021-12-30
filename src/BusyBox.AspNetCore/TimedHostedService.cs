@@ -5,6 +5,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace BusyBox.AspNetCore
 {
+    /// <summary>A timed background task</summary>
     public abstract class TimedHostedService : IHostedService, IDisposable
     {
         private CancellationTokenSource? _stoppingCts;
