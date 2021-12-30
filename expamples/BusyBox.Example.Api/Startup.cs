@@ -25,11 +25,11 @@ namespace BusyBox.Example.Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BusyBox.Example.Api", Version = "v1" });
             });
-
+            services.AddHostedService<MyTimedHostedService>();
             services
                 .AddAuthentication("Bearer")
                 .AddJwt(Configuration)
-                .AddJwt(Configuration, schema:"Alfa")
+                .AddJwt(Configuration, schema: "Alfa")
                 .AddSymmetricSecurity();
         }
 
