@@ -23,28 +23,27 @@ namespace BusyBox.AspNetCore.Json
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name));
 
-            ReadOnlySpan<char> charset = name.ToCharArray();
-            int countCharUpper = GetCountCharUpper(charset);
+            int countCharUpper = GetCountCharUpper(name);
 
             int indexWrite = indexStart;
 
             var arrayPool = ArrayPool<char>.Shared;
-            char[] buffer = arrayPool.Rent(charset.Length + countCharUpper);
+            char[] buffer = arrayPool.Rent(name.Length + countCharUpper);
 
-            if (char.IsUpper(charset[0]))
-                buffer[0] = char.ToLower(charset[0]);
+            if (char.IsUpper(name[0]))
+                buffer[0] = char.ToLower(name[0]);
 
-            for (int indexRead = indexStart; indexRead < charset.Length; indexRead++)
+            for (int indexRead = indexStart; indexRead < name.Length; indexRead++)
             {
-                if (char.IsUpper(charset[indexRead]))
+                if (char.IsUpper(name[indexRead]))
                 {
                     buffer[indexWrite] = splitChar;
-                    buffer[++indexWrite] = char.ToLower(charset[indexRead]);
+                    buffer[++indexWrite] = char.ToLower(name[indexRead]);
                     indexWrite++;
                 }
                 else
                 {
-                    buffer[indexWrite] = charset[indexRead];
+                    buffer[indexWrite] = name[indexRead];
                     indexWrite++;
                 }
             }
@@ -53,6 +52,18 @@ namespace BusyBox.AspNetCore.Json
             arrayPool.Return(buffer, true);
 
             return str;
+        }
+
+        private static int GetCountCharUpper(string str)
+        {
+            int count = 0;
+            for (int index = 0; index < str.Length; index++)
+            {
+                if (char.IsUpper(str[index]))
+                    count++;
+            }
+
+            return count;
         }
 
         private static int GetCountCharUpper(ReadOnlySpan<char> span)
