@@ -1,0 +1,21 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "4c287559-b53d-4a69-8e45-1edf071c035b": {
+      "ProjectGuid": "4c287559-b53d-4a69-8e45-1edf071c035b",
+      "DisplayName": "BusyBox.AspNetCore",
+      "ColorIndex": 0
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    },
+    "0c03fde2-8406-4af0-a911-affdc67639ba": {
+      "ProjectGuid": "0c03fde2-8406-4af0-a911-affdc67639ba",
+      "DisplayName": "BusyBox.Example.Api",
+      "ColorIndex": 1
+    }
+  },
+  "NextColorIndex": 2
+}
